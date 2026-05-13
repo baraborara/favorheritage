@@ -1,0 +1,432 @@
+import { useState } from "react";
+
+export default function FavorHeritageWebsite() {
+  const [currentPage, setCurrentPage] = useState("home");
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (!loginData.email || !loginData.password) {
+      alert("Harap isi email dan password.");
+      return;
+    }
+
+    localStorage.setItem("favorUser", JSON.stringify(loginData));
+
+    alert("Login berhasil di Favor Heritage!");
+    setCurrentPage("home");
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    if (
+      !registerData.username ||
+      !registerData.email ||
+      !registerData.password
+    ) {
+      alert("Semua data harus diisi.");
+      return;
+    }
+
+    localStorage.setItem("favorRegister", JSON.stringify(registerData));
+
+    alert("Register berhasil! Silakan login.");
+    setCurrentPage("login");
+  };
+  const pizzas = [
+    {
+      name: "Truffle Pepperoni",
+      desc: "Pizza tipis dengan pepperoni premium, saus tomat khas Italia, dan aroma truffle.",
+      price: "Rp85.000",
+    },
+    {
+      name: "Midnight Margherita",
+      desc: "Mozzarella lembut, basil segar, dan saus tomat autentik Napoli.",
+      price: "Rp72.000",
+    },
+    {
+      name: "Inferno Cheese",
+      desc: "Perpaduan empat keju dengan sentuhan cabai Italia yang hangat.",
+      price: "Rp90.000",
+    },
+  ];
+
+  const drinks = [
+    {
+      name: "Velvet Espresso",
+      desc: "Espresso pekat dengan aroma smoky dan sentuhan cokelat hitam.",
+      price: "Rp32.000",
+    },
+    {
+      name: "Aurora Latte",
+      desc: "Latte creamy dengan foam lembut dan sirup vanilla caramel.",
+      price: "Rp38.000",
+    },
+    {
+      name: "Neon Berry Soda",
+      desc: "Minuman soda berry segar dengan efek sparkling warna-warni.",
+      price: "Rp35.000",
+    },
+  ];
+
+  const foods = [
+    {
+      name: "Black Pasta Alfredo",
+      desc: "Pasta tinta cumi creamy dengan smoked beef dan parmesan.",
+      price: "Rp78.000",
+    },
+    {
+      name: "Lasagna Heritage",
+      desc: "Lasagna daging khas Favor Heritage dengan saus tomat roasted.",
+      price: "Rp88.000",
+    },
+    {
+      name: "Risotto Funghi",
+      desc: "Risotto creamy jamur Italia dengan sentuhan butter garlic.",
+      price: "Rp80.000",
+    },
+  ];
+
+  if (currentPage === "login") {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-72 h-72 bg-pink-500 opacity-20 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 opacity-20 blur-3xl rounded-full"></div>
+
+        <form
+          onSubmit={handleLogin}
+          className="relative z-10 w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-2xl rounded-[2rem] p-10"
+        >
+          <h1 className="text-4xl font-black text-center mb-3">
+            FAVOR HERITAGE
+          </h1>
+
+          <p className="text-center text-gray-400 mb-10">
+            Welcome back to the midnight atmosphere.
+          </p>
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={loginData.email}
+            onChange={(e) =>
+              setLoginData({ ...loginData, email: e.target.value })
+            }
+            className="w-full p-4 rounded-2xl bg-zinc-900 border border-white/10 mb-5 outline-none focus:border-amber-400"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={loginData.password}
+            onChange={(e) =>
+              setLoginData({ ...loginData, password: e.target.value })
+            }
+            className="w-full p-4 rounded-2xl bg-zinc-900 border border-white/10 mb-6 outline-none focus:border-amber-400"
+          />
+
+          <button className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-400 to-pink-500 text-black font-bold hover:scale-105 transition duration-300">
+            Login
+          </button>
+
+          <p className="text-center text-gray-400 mt-6">
+            Belum punya akun?
+            <button
+              type="button"
+              onClick={() => setCurrentPage("register")}
+              className="text-pink-400 ml-2"
+            >
+              Register
+            </button>
+          </p>
+        </form>
+      </div>
+    );
+  }
+
+  if (currentPage === "register") {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500 opacity-20 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 opacity-20 blur-3xl rounded-full"></div>
+
+        <form
+          onSubmit={handleRegister}
+          className="relative z-10 w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-2xl rounded-[2rem] p-10"
+        >
+          <h1 className="text-4xl font-black text-center mb-3">
+            CREATE ACCOUNT
+          </h1>
+
+          <p className="text-center text-gray-400 mb-10">
+            Join the Favor Heritage night experience.
+          </p>
+
+          <input
+            type="text"
+            placeholder="Username"
+            value={registerData.username}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                username: e.target.value,
+              })
+            }
+            className="w-full p-4 rounded-2xl bg-zinc-900 border border-white/10 mb-5 outline-none focus:border-cyan-400"
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={registerData.email}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                email: e.target.value,
+              })
+            }
+            className="w-full p-4 rounded-2xl bg-zinc-900 border border-white/10 mb-5 outline-none focus:border-cyan-400"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={registerData.password}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                password: e.target.value,
+              })
+            }
+            className="w-full p-4 rounded-2xl bg-zinc-900 border border-white/10 mb-6 outline-none focus:border-cyan-400"
+          />
+
+          <button className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-bold hover:scale
+    <div className="bg-black text-white min-h-screen overflow-x-hidden font-sans relative">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500 opacity-20 blur-3xl rounded-full"></div>
+      <div className="absolute top-40 right-10 w-80 h-80 bg-pink-500 opacity-20 blur-3xl rounded-full"></div>
+      <div className="absolute bottom-20 left-20 w-72 h-72 bg-blue-500 opacity-20 blur-3xl rounded-full"></div>
+
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-lg border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold tracking-[0.3em] text-amber-400">
+            FAVOR HERITAGE
+          </h1>
+
+          <div className="hidden md:flex gap-8 text-sm uppercase tracking-widest text-gray-300">
+            <a href="#home" className="hover:text-amber-400 transition">
+              Home
+            </a>
+            <a href="#menu" className="hover:text-amber-400 transition">
+              Menu
+            </a>
+            <a href="#about" className="hover:text-amber-400 transition">
+              About
+            </a>
+            <a href="#contact" className="hover:text-amber-400 transition">
+              Contact
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section
+        id="home"
+        className="relative min-h-screen flex items-center justify-center px-6"
+      >
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070')] bg-cover bg-center opacity-20"></div>
+
+        <div className="relative z-10 text-center max-w-4xl">
+          <p className="uppercase tracking-[0.5em] text-amber-300 text-sm mb-5">
+            Italian Café • Dark Luxury • Night Vibes
+          </p>
+
+          <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6">
+            FAVOR
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pink-400 to-purple-500">
+              HERITAGE
+            </span>
+          </h1>
+
+          <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8">
+            Tempat nongkrong bernuansa gelap elegan dengan lampu neon warna-warni,
+            aroma kopi hangat, pizza autentik Italia, dan suasana malam yang nyaman.
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <button className="px-8 py-4 rounded-2xl bg-amber-400 text-black font-bold hover:scale-105 transition duration-300 shadow-2xl shadow-amber-400/30">
+              Explore Menu
+            </button>
+
+            <button className="px-8 py-4 rounded-2xl border border-white/20 hover:bg-white/10 transition duration-300">
+              Reserve Table
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Menu Section */}
+      <section id="menu" className="relative py-24 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="uppercase tracking-[0.4em] text-amber-400 text-sm mb-4">
+            Signature Menu
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold">
+            Taste The Night
+          </h2>
+        </div>
+
+        {/* Pizza */}
+        <div className="mb-20">
+          <h3 className="text-3xl font-bold mb-8 text-pink-400">
+            Pizza Selection
+          </h3>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {pizzas.map((pizza, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl hover:-translate-y-2 hover:border-pink-400/50 transition duration-300"
+              >
+                <div className="h-52 rounded-2xl mb-5 bg-gradient-to-br from-pink-500/20 to-orange-400/20 flex items-center justify-center text-6xl">
+                  🍕
+                </div>
+
+                <h4 className="text-2xl font-bold mb-3">{pizza.name}</h4>
+                <p className="text-gray-400 mb-5 leading-relaxed">
+                  {pizza.desc}
+                </p>
+                <p className="text-amber-400 font-bold text-lg">
+                  {pizza.price}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Drinks */}
+        <div className="mb-20">
+          <h3 className="text-3xl font-bold mb-8 text-cyan-400">
+            Coffee & Drinks
+          </h3>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {drinks.map((drink, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl hover:-translate-y-2 hover:border-cyan-400/50 transition duration-300"
+              >
+                <div className="h-52 rounded-2xl mb-5 bg-gradient-to-br from-cyan-500/20 to-blue-400/20 flex items-center justify-center text-6xl">
+                  ☕
+                </div>
+
+                <h4 className="text-2xl font-bold mb-3">{drink.name}</h4>
+                <p className="text-gray-400 mb-5 leading-relaxed">
+                  {drink.desc}
+                </p>
+                <p className="text-amber-400 font-bold text-lg">
+                  {drink.price}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Italian Food */}
+        <div>
+          <h3 className="text-3xl font-bold mb-8 text-purple-400">
+            Italian Cuisine
+          </h3>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {foods.map((food, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl hover:-translate-y-2 hover:border-purple-400/50 transition duration-300"
+              >
+                <div className="h-52 rounded-2xl mb-5 bg-gradient-to-br from-purple-500/20 to-indigo-400/20 flex items-center justify-center text-6xl">
+                  🍝
+                </div>
+
+                <h4 className="text-2xl font-bold mb-3">{food.name}</h4>
+                <p className="text-gray-400 mb-5 leading-relaxed">
+                  {food.desc}
+                </p>
+                <p className="text-amber-400 font-bold text-lg">
+                  {food.price}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section
+        id="about"
+        className="py-24 px-6 bg-gradient-to-b from-black to-zinc-900"
+      >
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="uppercase tracking-[0.4em] text-amber-400 text-sm mb-4">
+            About Favor Heritage
+          </p>
+
+          <h2 className="text-4xl md:text-5xl font-bold mb-8">
+            Elegant Darkness & Italian Warmth
+          </h2>
+
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Favor Heritage menghadirkan pengalaman café modern dengan suasana
+            remang-remang, lampu neon artistik, musik malam yang hangat, dan
+            menu khas Italia yang dibuat dengan kualitas premium. Tempat ini
+            cocok untuk nongkrong malam, dinner romantis, ataupun menikmati kopi
+            sambil bekerja.
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-24 px-6">
+        <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-[2rem] p-10 backdrop-blur-2xl text-center">
+          <p className="uppercase tracking-[0.4em] text-amber-400 text-sm mb-4">
+            Visit Us
+          </p>
+
+          <h2 className="text-4xl font-bold mb-6">
+            Experience The Midnight Taste
+          </h2>
+
+          <div className="space-y-4 text-gray-300 text-lg">
+            <p>📍 Favor Heritage Café</p>
+            <p>🕒 Open Everyday • 16:00 - 01:00</p>
+            <p>📞 +62 812-3456-7890</p>
+            <p>📧 favorheritage@email.com</p>
+          </div>
+
+          <button className="mt-10 px-10 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 font-bold hover:scale-105 transition duration-300 shadow-2xl shadow-purple-500/30">
+            Book Your Table
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 py-8 text-center text-gray-500 text-sm">
+        © 2026 Favor Heritage Café • Dark Italian Night Experience
+      </footer>
+    </div>
+  );
+}
